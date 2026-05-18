@@ -1,0 +1,56 @@
+# Flower Classification CNN Model
+
+## Deskripsi Proyek
+Proyek ini menggunakan Convolutional Neural Network (CNN) untuk mengklasifikasikan 3 jenis bunga: Daisy, Sunflower, dan Tulip.
+
+## Dataset
+- Sumber: Kaggle Flowers Recognition
+- Jumlah gambar: 1974 training, 509 testing
+- Resolusi: Tidak seragam (di-resize ke 128x128)
+- Kelas: daisy, sunflower, tulip
+
+## Arsitektur Model
+- 3 layer Conv2D (32, 64, 128 filters)
+- MaxPooling2D setiap layer
+- Flatten + Dense layers
+- Dropout 0.5 untuk mencegah overfitting
+- Output: 3 kelas (softmax)
+
+## Hasil Training
+- Testing Accuracy: 85.00%
+- Best Validation: 88.00%
+
+## Cara Menjalankan
+
+### 1. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 2. Jalankan Inference dengan Python
+```python
+import tensorflow as tf
+from tensorflow.keras.models import load_model
+import numpy as np
+import cv2
+
+# Load model
+model = load_model('best_model.h5')
+
+# Prediksi gambar
+img = cv2.imread('flower.jpg')
+img = cv2.resize(img, (128, 128))
+img = img / 255.0
+img = np.expand_dims(img, axis=0)
+
+prediction = model.predict(img)
+class_names = ['daisy', 'sunflower', 'tulip']
+result = class_names[np.argmax(prediction)]
+print(f"Prediksi: {result}")
+```
+
+## Author
+Nama Anda
+
+## Lisensi
+MIT
